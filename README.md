@@ -8,9 +8,9 @@ Code behind our in-house link shortener built on top of NodeJS - http://ggxy.co
 - Make it faster
 - Add click tracking (number of clicks)
 - Fix GET forwarding
-- Add Pastebin Like Functionality
-- Exploit RBOMB's artists to design an awesome logo and website assets
+- Add Pastebin-like functionality
+- Exploit RBOMB's artists to design an logo and website assets
 - Social Networking hookins (post link to twitter etc)
-- have some sort of planning meeting
-- upload the code
-- Add Unit and *performance* tests
+- Have some sort of planning meeting
+- Upload the code
+- Add unit and *performance* tests
