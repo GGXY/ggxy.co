@@ -12,3 +12,4 @@ Code behind our in-house link shortener built on top of NodeJS - http://ggxy.co
 - Exploit RBOMB's artists to design an awesome logo and website assets
 - Social Networking hookins (post link to twitter etc)
 - have some sort of planning meeting
+- upload the code
