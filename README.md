@@ -13,3 +13,4 @@ Code behind our in-house link shortener built on top of NodeJS - http://ggxy.co
 - Social Networking hookins (post link to twitter etc)
 - have some sort of planning meeting
 - upload the code
+- Add Unit and *performance* tests
