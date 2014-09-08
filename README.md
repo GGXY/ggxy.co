@@ -1,7 +1,7 @@
 ggxy.co
 =======
 
-Code behind our in-house link shortener - http://ggxy.co
+Code behind our in-house link shortener built on top of NodeJS - http://ggxy.co
 
 ###TODO:
 - Make it faster
