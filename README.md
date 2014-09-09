@@ -9,11 +9,11 @@ Code behind our in-house link shortener and paste tool built on top of NodeJS - 
 - Add click tracking (number of clicks)
 - Fix GET forwarding
 - Add Pastebin-like functionality
-- Exploit RBOMB's artists to design an logo and website assets
 - Social Networking hookins (post link to twitter etc)
 - Have some sort of planning meeting
 - Upload the code
 - Add unit and *performance* tests
-
+- Add multiple domain capability
+- API planning
 
 :kiss:
