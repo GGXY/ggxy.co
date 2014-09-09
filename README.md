@@ -16,4 +16,4 @@ Code behind our in-house link shortener and paste tool built on top of NodeJS - 
 - Add unit and *performance* tests
 
 
-(K.I.S.S.)
+:kiss:
