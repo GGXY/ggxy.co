@@ -10,7 +10,7 @@ Code behind our in-house link shortener and paste tool built on top of NodeJS - 
 - Fix GET forwarding
 - Add Pastebin-like functionality
 - Social Networking hookins (post link to twitter etc)
-- --Have some sort of planning meeting--
+- ~~Have some sort of planning meeting~~
 - Upload the code
 - Add unit and *performance* tests
 - Add multiple domain capability
