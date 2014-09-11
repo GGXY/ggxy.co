@@ -16,4 +16,4 @@ Code behind our in-house link shortener and paste tool built on top of NodeJS - 
 - Add multiple domain capability
 - API planning
 
-:kiss:
+:kiss: ![debot](http://i.imgur.com/9mswB2S.png)
