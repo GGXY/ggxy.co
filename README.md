@@ -3,7 +3,13 @@ ggxy.co
 
 Code behind our in-house link shortener and paste tool built on top of NodeJS - http://ggxy.co
 
-###TODO:
+### Setup:
+`npm install`
+`node index.js`
+
+Server is running on port 3003.
+
+### TODO:
 - Speed improvements
 - Add click tracking (number of clicks)
 - GET forwarding
