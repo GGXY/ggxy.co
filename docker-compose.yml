@@ -1,0 +1,8 @@
+version: '2'
+services:
+  api:
+    build: .
+    volumes:
+        - ./data:/app/data/
+    environment: 
+       SECRET: "1234abcdef"
