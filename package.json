@@ -1,0 +1,22 @@
+{
+  "name": "ggxy.co",
+  "version": "1.0.0",
+  "description": "A URL Forwarder and shortener",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/GGXY/ggxy.co.git"
+  },
+  "author": "dab",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/GGXY/ggxy.co/issues"
+  },
+  "homepage": "https://github.com/GGXY/ggxy.co#readme",
+  "dependencies": {
+    "fastify": "^3.18.1"
+  }
+}

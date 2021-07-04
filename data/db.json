@@ -1,0 +1,46 @@
+[
+    {
+        "path": "fb",
+        "redirect": "https://www.facebook.com/GamerGalaxyCommunity/"
+    },
+    {
+        "path": "steam",
+        "redirect": "https://steamcommunity.com/groups/GGXY"
+    },
+    {
+        "path": "discord",
+        "redirect": "https://discordapp.com/invite/P8QdX3b"
+    },
+    {
+        "path": "youtube",
+        "redirect": "https://www.youtube.com/channel/UC5T-C4-D274cA69y5nXIBYA"
+    },
+    {
+        "path": "twitch",
+        "redirect": "https://www.twitch.tv/gamergalaxy_tv"
+    },
+    {
+        "path": "mixer",
+        "redirect": "https://mixer.com/team/ggxy"
+    },
+    {
+        "path": "twitter",
+        "redirect": "https://twitter.com/gamergxy"
+    },
+    {
+        "path": "telegram",
+        "redirect": "https://t.me/joinchat/ljslAwkXljU1NjVh"
+    },
+    {
+        "path": "csgo",
+        "redirect": "https://gamergalaxy.net/games/cs-go"
+    },
+    {
+        "path": "valorant",
+        "redirect": "https://gamergalaxy.net/games/valorant"
+    },
+    {
+        "path": "test",
+        "redirect": "https://test.com/"
+    }
+]
