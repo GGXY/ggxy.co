@@ -24,7 +24,7 @@ fastify.get('/news/:slug', redirectDirectPath);
 
 const start = async () => {
     try {
-        await fastify.listen(3003)
+        await fastify.listen(3003, '0.0.0.0')
     } catch (err) {
         fastify.log.error(err)
         process.exit(1)
