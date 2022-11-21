@@ -17,6 +17,6 @@
   },
   "homepage": "https://github.com/GGXY/ggxy.co#readme",
   "dependencies": {
-    "fastify": "^3.18.1"
+    "fastify": "^3.29.4"
   }
 }
