@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Redirector</title>
+<link rel="stylesheet" href="/_static/admin.css">
+</head>
+<body>
+
+<h1>&#x1F500; Redirector</h1>
+
+<div id="status"></div>
+
+<div class="card">
+  <h2>Add Redirect</h2>
+  <form id="addForm">
+    <div class="form-row">
+      <div class="form-group">
+        <label>Source Host</label>
+        <input type="text" id="f-host" placeholder="ggxy.co" value="">
+      </div>
+      <div class="form-group">
+        <label>Source Path</label>
+        <input type="text" id="f-path" placeholder="/discord" value="/">
+      </div>
+      <div class="form-group">
+        <label>Destination</label>
+        <input type="text" id="f-dest" class="w-wide" placeholder="https://example.com/..." value="">
+      </div>
+      <div class="form-group">
+        <label>Type</label>
+        <select id="f-type">
+          <option value="301">301 Permanent</option>
+          <option value="302">302 Temporary</option>
+        </select>
+      </div>
+      <div class="checkbox-row">
+        <input type="checkbox" id="f-regex">
+        <label for="f-regex" style="font-size:0.85rem;">Regex</label>
+      </div>
+      <div class="form-group" style="padding-top:1.05rem;">
+        <button type="submit">Add Rule</button>
+      </div>
+    </div>
+  </form>
+</div>
+
+<div class="card">
+  <h2>Rules</h2>
+  <div id="table-wrap">
+    <div class="empty">Loading...</div>
+  </div>
+</div>
+
+<script src="/_static/admin.js"></script>
+</body>
+</html>
