@@ -25,6 +25,8 @@ type Server struct {
 	Queries      *dbgen.Queries
 	TemplatesDir string
 	StaticDir    string
+	AuthUser     string
+	AuthPass     string
 }
 
 func New(dbPath string) (*Server, error) {
@@ -33,6 +35,8 @@ func New(dbPath string) (*Server, error) {
 	srv := &Server{
 		TemplatesDir: filepath.Join(baseDir, "templates"),
 		StaticDir:    filepath.Join(baseDir, "static"),
+		AuthUser:     os.Getenv("BASIC_AUTH_USER"),
+		AuthPass:     os.Getenv("BASIC_AUTH_PASS"),
 	}
 	if err := srv.setUpDatabase(dbPath); err != nil {
 		return nil, err
@@ -56,12 +60,12 @@ func (s *Server) setUpDatabase(dbPath string) error {
 func (s *Server) Serve(addr string) error {
 	mux := http.NewServeMux()
 
-	// Admin routes
-	mux.HandleFunc("GET /_admin", s.handleAdmin)
-	mux.HandleFunc("GET /_admin/api/redirects", s.handleListRedirects)
-	mux.HandleFunc("POST /_admin/api/redirects", s.handleCreateRedirect)
-	mux.HandleFunc("PUT /_admin/api/redirects/{id}", s.handleUpdateRedirect)
-	mux.HandleFunc("DELETE /_admin/api/redirects/{id}", s.handleDeleteRedirect)
+	// Admin routes (protected by basic auth)
+	mux.HandleFunc("GET /_admin", s.requireAuth(s.handleAdmin))
+	mux.HandleFunc("GET /_admin/api/redirects", s.requireAuth(s.handleListRedirects))
+	mux.HandleFunc("POST /_admin/api/redirects", s.requireAuth(s.handleCreateRedirect))
+	mux.HandleFunc("PUT /_admin/api/redirects/{id}", s.requireAuth(s.handleUpdateRedirect))
+	mux.HandleFunc("DELETE /_admin/api/redirects/{id}", s.requireAuth(s.handleDeleteRedirect))
 
 	// Static files
 	mux.Handle("/_static/", http.StripPrefix("/_static/", http.FileServer(http.Dir(s.StaticDir))))
@@ -71,6 +75,24 @@ func (s *Server) Serve(addr string) error {
 
 	slog.Info("starting redirector", "addr", addr)
 	return http.ListenAndServe(addr, mux)
+}
+
+// requireAuth wraps a handler with HTTP Basic Auth.
+// If BASIC_AUTH_USER and BASIC_AUTH_PASS are both empty, auth is disabled.
+func (s *Server) requireAuth(next http.HandlerFunc) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		if s.AuthUser == "" && s.AuthPass == "" {
+			next(w, r)
+			return
+		}
+		user, pass, ok := r.BasicAuth()
+		if !ok || user != s.AuthUser || pass != s.AuthPass {
+			w.Header().Set("WWW-Authenticate", `Basic realm="admin"`)
+			http.Error(w, "Unauthorized", http.StatusUnauthorized)
+			return
+		}
+		next(w, r)
+	}
 }
 
 // --- Redirect Logic ---

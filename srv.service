@@ -11,6 +11,8 @@ Restart=always
 RestartSec=5
 Environment=HOME=/home/exedev
 Environment=USER=exedev
+Environment=BASIC_AUTH_USER=admin
+Environment=BASIC_AUTH_PASS=changeme
 StandardOutput=journal
 StandardError=journal
 

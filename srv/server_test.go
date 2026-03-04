@@ -12,10 +12,16 @@ import (
 	"srv.exe.dev/db/dbgen"
 )
 
+const testUser = "admin"
+const testPass = "secret"
+
 func testServer(t *testing.T) *Server {
 	t.Helper()
 	tempDB := filepath.Join(t.TempDir(), "test.sqlite3")
 	t.Cleanup(func() { os.Remove(tempDB) })
+	// Set env vars for basic auth during tests
+	t.Setenv("BASIC_AUTH_USER", testUser)
+	t.Setenv("BASIC_AUTH_PASS", testPass)
 	s, err := New(tempDB)
 	if err != nil {
 		t.Fatalf("failed to create server: %v", err)
@@ -37,7 +43,7 @@ func createRule(t *testing.T, s *Server, host, path, dest string, rtype int, reg
 		"is_regex":      isRegex,
 	})
 	req := httptest.NewRequest(http.MethodPost, "/_admin/api/redirects", bytes.NewReader(body))
-	req.Header.Set("X-ExeDev-UserID", "admin")
+	req.SetBasicAuth(testUser, testPass)
 	req.Header.Set("Content-Type", "application/json")
 	w := httptest.NewRecorder()
 	s.handleCreateRedirect(w, req)
@@ -51,20 +57,30 @@ func createRule(t *testing.T, s *Server, host, path, dest string, rtype int, reg
 
 func TestAdminAuth(t *testing.T) {
 	s := testServer(t)
+	protected := s.requireAuth(s.handleListRedirects)
 
 	// Without auth header
 	req := httptest.NewRequest(http.MethodGet, "/_admin/api/redirects", nil)
 	w := httptest.NewRecorder()
-	s.handleListRedirects(w, req)
+	protected(w, req)
 	if w.Code != http.StatusUnauthorized {
 		t.Errorf("expected 401, got %d", w.Code)
 	}
 
-	// With auth header
+	// With wrong credentials
 	req = httptest.NewRequest(http.MethodGet, "/_admin/api/redirects", nil)
-	req.Header.Set("X-ExeDev-UserID", "admin")
+	req.SetBasicAuth("wrong", "creds")
 	w = httptest.NewRecorder()
-	s.handleListRedirects(w, req)
+	protected(w, req)
+	if w.Code != http.StatusUnauthorized {
+		t.Errorf("expected 401 for wrong creds, got %d", w.Code)
+	}
+
+	// With correct credentials
+	req = httptest.NewRequest(http.MethodGet, "/_admin/api/redirects", nil)
+	req.SetBasicAuth(testUser, testPass)
+	w = httptest.NewRecorder()
+	protected(w, req)
 	if w.Code != http.StatusOK {
 		t.Errorf("expected 200, got %d", w.Code)
 	}
@@ -81,7 +97,7 @@ func TestCRUD(t *testing.T) {
 
 	// List
 	req := httptest.NewRequest(http.MethodGet, "/_admin/api/redirects", nil)
-	req.Header.Set("X-ExeDev-UserID", "admin")
+	req.SetBasicAuth(testUser, testPass)
 	w := httptest.NewRecorder()
 	s.handleListRedirects(w, req)
 	var list []dbgen.Redirect
@@ -99,7 +115,7 @@ func TestCRUD(t *testing.T) {
 		"is_regex":      0,
 	})
 	req = httptest.NewRequest(http.MethodPut, "/_admin/api/redirects/1", bytes.NewReader(updateBody))
-	req.Header.Set("X-ExeDev-UserID", "admin")
+	req.SetBasicAuth(testUser, testPass)
 	req.SetPathValue("id", "1")
 	w = httptest.NewRecorder()
 	s.handleUpdateRedirect(w, req)
@@ -114,7 +130,7 @@ func TestCRUD(t *testing.T) {
 
 	// Delete
 	req = httptest.NewRequest(http.MethodDelete, "/_admin/api/redirects/1", nil)
-	req.Header.Set("X-ExeDev-UserID", "admin")
+	req.SetBasicAuth(testUser, testPass)
 	req.SetPathValue("id", "1")
 	w = httptest.NewRecorder()
 	s.handleDeleteRedirect(w, req)
