@@ -39,4 +39,3 @@ EXPOSE 8000
 
 # SQLite DB lives in /data (the working directory). Mount a volume here.
 ENTRYPOINT ["redirector"]
-CMD ["-listen", ":8000"]
