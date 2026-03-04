@@ -1,8 +1,8 @@
-# Go Shelley Template
+# ggxy.co
 
-This is a starter template for building Go web applications on exe.dev. It demonstrates end-to-end usage including HTTP handlers, authentication, database integration, and deployment.
+Link shortener and redirect service with regex support, hit counting, and admin UI — built with Go.
 
-Use this as a foundation to build your own service.
+Successor to the original NodeJS version.
 
 ## Building and Running
 
@@ -10,24 +10,10 @@ Build with `make build`, then run `./srv`. The server listens on port 8000 by de
 
 ## Running as a systemd service
 
-To run the server as a systemd service:
-
 ```bash
-# Install the service file
 sudo cp srv.service /etc/systemd/system/srv.service
-
-# Reload systemd and enable the service
 sudo systemctl daemon-reload
-sudo systemctl enable srv.service
-
-# Start the service
-sudo systemctl start srv
-
-# Check status
-systemctl status srv
-
-# View logs
-journalctl -u srv -f
+sudo systemctl enable --now srv
 ```
 
 To restart after code changes:
@@ -39,19 +25,25 @@ sudo systemctl restart srv
 
 ## Authorization
 
-exe.dev provides authorization headers and login/logout links
-that this template uses.
-
-When proxied through exed, requests will include `X-ExeDev-UserID` and
-`X-ExeDev-Email` if the user is authenticated via exe.dev.
+Admin routes are protected with HTTP Basic Auth via `BASIC_AUTH_USER` / `BASIC_AUTH_PASS` environment variables.
 
 ## Database
 
-This template uses sqlite (`db.sqlite3`). SQL queries are managed with sqlc.
+Uses SQLite (`db.sqlite3`). SQL queries managed with sqlc.
 
 ## Code layout
 
 - `cmd/srv`: main package (binary entrypoint)
 - `srv`: HTTP server logic (handlers)
 - `srv/templates`: Go HTML templates
-- `db`: SQLite open + migrations (001-base.sql)
+- `db`: SQLite open + migrations
+
+## Docker
+
+```bash
+docker compose up --build
+```
+
+---
+
+:kiss: ![debot](http://i.imgur.com/9mswB2S.png)
