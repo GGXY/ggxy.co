@@ -6,7 +6,14 @@ Successor to the original NodeJS version.
 
 ## Building and Running
 
-Build with `make build`, then run `./srv`. The server listens on port 8000 by default.
+Build with `make build`, then run `./redirector`. The server listens on port 8000 by default.
+
+You can change the listen address via:
+- `-listen` flag: `./redirector -listen :9000`
+- `PORT` env var: `PORT=9000 ./redirector`
+- `LISTEN_ADDR` env var: `LISTEN_ADDR=127.0.0.1:9000 ./redirector`
+
+Precedence: `-listen` flag > `LISTEN_ADDR` > `PORT` > default (`:8000`).
 
 ## Running as a systemd service
 
