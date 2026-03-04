@@ -1,0 +1,15 @@
+services:
+  redirector:
+    build: .
+    ports:
+      - "8000:8000"
+    volumes:
+      - redirector-data:/data
+    working_dir: /data
+    environment:
+      - BASIC_AUTH_USER=admin
+      - BASIC_AUTH_PASS=changeme
+    restart: unless-stopped
+
+volumes:
+  redirector-data:
